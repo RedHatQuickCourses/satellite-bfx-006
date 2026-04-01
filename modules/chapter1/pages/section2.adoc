@@ -1,35 +1,79 @@
-= Check your work
+= Break-fix Scenario
 
-== Follow below steps in the lab to check your work
+A RHEL9 server is running `Red Hat Satellite 6.17` but `hammer ping` command shows `candlepin` failure.
+Your job is to investigate the issue and ensure that `hammer ping` does not show `FAIL` for any of the services.
 
-FIXME: Add the instructions to be followed in the lab environment to make sure the problem has been resolved. You may chose to remove this block if grading script is provided in the lab to check the work.
+Here is error the message:
 
-== Check your work using the grading script
+.Sample output
+----
+[root@satellite ~]# hammer ping
+...
+...
+candlepin:        
+    Status:          FAIL
+    Server Response: Message: Failed to open TCP connection to localhost:23443 (Connection refused - connect(2) for "localhost" port 23443)
+candlepin_auth:   
+    Status:          FAIL
+    Server Response: Message: A backend service [ Candlepin ] is unreachable
+candlepin_events: 
+    Status:          FAIL
+    message:         Not running
+    Server Response: Duration: 0ms
+...
+...
+...
+----
 
-After you have resolved the issue and met the success criteria, login to `FIXME` system as `FIXME` user and run the grading script as shown here to check your work:
+== Objectives
+
+* Investigate why the candlepin & tomcat services are down in `hammer ping` .
+* Solve the candlepin issue in the hands-on lab environment.
+
+== Recreate Scenario
+
+To recreate this scenario, run the `lab` script on the `bastion` server.
 
 [source,bash,role=execute]
 ----
-break-fix-script grade
+lab break breakfix0
 ----
 
 .Sample output
 ----
-[root@classroom ~]# break-fix-script grade
-Initiating break-fix-script with option grade
-Grading.  Please wait.
-Success.
-COMPLETION CODE: <check your output for this value>
-Completed break-fix-script with option grade successfully
+[lab-user@bastion ~]$ lab break breakfix0
+Initiating /usr/local/bin/lab with option(s) break breakfix0
+Completed /usr/local/bin/lab with option(s) break breakfix0 successfully
 ----
 
-FIXME: Remove the below block if no grading script is provided to check the work in the break-fix activity. In this case make sure you use the above block to provide step-by-step instructions learner can follow to check their work.
+[NOTE]
+It may take 2-3 minutes to complete.
 
-== Submit the completion code
+== Success Criteria
 
-NOTE: Skip this if not applicable for you.
+Ensure the `hammer ping` command results in ok for all the listed services including candlepin.
 
-- For RedHat internal audience: Submit that completion code https://link-to-appropriate-lms.com[here,window=_blank] to receive a grade for this training
-- For RedHat partners: Submit that completion code https://link-to-appropriate-lms.com[here,window=_blank] to receive a grade for this training
+[source,bash,role=execute]
+----
+hammer ping
+----
 
-FIXME: Change the links in the above lines to the link for appropriate audience specific LMS where learner can provide completion code. Remove this block if submitting completion is not applicable.
+.Sample output:
+----
+...
+...
+
+candlepin:        
+    Status:          ok
+    Server Response: Duration: 21ms
+candlepin_auth:   
+    Status:          ok
+    Server Response: Duration: 16ms
+candlepin_events: 
+    Status:          ok
+    message:         32 Processed, 0 Failed
+    Server Response: Duration: 0ms
+
+...
+...
+----
