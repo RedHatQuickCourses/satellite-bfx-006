@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Guided solution (page 1 of 2) :: Satellite Breakfix 6</title>
+    <title>Guided Solution (1 of 1) :: Satellite Breakfix 6</title>
     <link rel="prev" href="index.html">
-    <link rel="next" href="section2.html">
+    <link rel="next" href="../appendix/appendix.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -35,7 +35,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Satellite Breakfix 6</a></h3>
+    <h3 class="title"><a href="../index.html">Break-fix Practice: Fixing Candlepin with Satellite 6</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -61,7 +61,10 @@
     <a class="nav-link" href="../chapter1/section1.html">Break-fix activity</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter1/section2.html">Check your work</a>
+    <a class="nav-link" href="../chapter1/section2.html">Break-fix Scenario</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section3.html">Check your work</a>
   </li>
 </ul>
   </li>
@@ -74,10 +77,7 @@
     <a class="nav-link" href="index.html">Guided solution</a>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section1.html">Guided solution (page 1 of 2)</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Guided solution (page 2 of 2)</a>
+    <a class="nav-link" href="section1.html">Guided Solution (1 of 1)</a>
   </li>
 </ul>
   </li>
@@ -95,12 +95,12 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Satellite Breakfix 6</span>
+    <span class="title">Break-fix Practice: Fixing Candlepin with Satellite 6</span>
     <span class="version">1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Satellite Breakfix 6</a>
+      <a class="title" href="../index.html">Break-fix Practice: Fixing Candlepin with Satellite 6</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">1</a>
@@ -118,9 +118,9 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Satellite Breakfix 6</a></li>
+    <li><a href="../index.html">Break-fix Practice: Fixing Candlepin with Satellite 6</a></li>
     <li><a href="index.html">Guided solution</a></li>
-    <li><a href="section1.html">Guided solution (page 1 of 2)</a></li>
+    <li><a href="section1.html">Guided Solution (1 of 1)</a></li>
   </ul>
 </nav>
 </div>
@@ -129,13 +129,120 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Guided solution (page 1 of 2)</h1>
+<h1 class="page">Guided Solution (1 of 1)</h1>
+<div class="sect1">
+<h2 id="_objectives"><a class="anchor" href="#_objectives"></a>Objectives</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Investigate why the candlepin services are in failed state.</p>
+</li>
+<li>
+<p>Solve the candlepin issue in the hands-on lab environment.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_instructions"><a class="anchor" href="#_instructions"></a>Instructions</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>FIXME: Provide step-by-step instructions here to resolve the issue.</p>
+<p>Run the following instructions on the <code>satellite</code> system with <code>root</code> as the user.</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>[cloud-user@satellite ~]$ sudo su -
+[root@satellite ~]#</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Check the <code>/var/log/messages</code> log to get some hint . We should see something like the below trace which indicates issues with permissions of files &amp; directories related to candlepin and also in some cases ownership is missing from tomcat.</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>Apr  1 03:38:26 satellite server[6039]: #011java.io.FileNotFoundException: /usr/share/tomcat/conf/server.xml (Permission denied)
+Apr  1 03:38:26 satellite server[6039]: 01-Apr-2026 03:38:26.862 WARNING [main] org.apache.catalina.startup.Catalina.parseServerXml Permissions incorrect, read permission is not allowed on the file
+Apr  1 03:42:33 satellite server[7775]: #011java.io.FileNotFoundException: /usr/share/tomcat/conf/server.xml (Permission denied)
+Apr  1 03:42:33 satellite server[7775]: 01-Apr-2026 03:42:33.887 WARNING [main] org.apache.catalina.startup.Catalina.parseServerXml Permissions incorrect, read permission is not allowed on the file</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Check the below files and directories</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>[root@satellite ~]# ls -ld /etc/tomcat
+drwxr-xr-x. 4 root root 4096 Mar 22 03:07 /etc/tomcat
+^^ Group ownership of tomcat is missing here
+
+[root@satellite ~]# ll /etc/candlepin/candlepin.conf
+-rw-r-----. 1 root root 1674 Dec  2 04:50 /etc/candlepin/candlepin.conf
+^^ Group ownership of tomcat is missing here
+
+[root@satellite ~]# ls -ld /var/log/candlepin
+drw-------. 2 root root 158 Mar 22 03:05 /var/log/candlepin
+^^ Permission on others and ownerhsip both are missing here</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To fix it:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">chgrp -R tomcat /etc/tomcat
+chgrp tomcat -R /etc/candlepin/
+chgrp tomcat /etc/candlepin/candlepin.conf
+chown -R tomcat:tomcat /var/log/candlepin
+chmod 644 -R /var/log/candlepin</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Check the <code>/var/log/candlepin/error.log</code> log to get some further hint . We should see something like the below trace which indicates issues with activemq data corruption.</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>2026-04-01 03:42:58,072 [thread=main] [=, org=, csid=] WARN  org.candlepin.controller.mode.CandlepinModeManager - Candlepin is entering suspend mode. Reason: [ACTIVEMQ] DOWN
+2026-04-01 03:42:58,306 [thread=main] [=, org=, csid=] ERROR org.candlepin.async.JobManager - Unexpected exception occurred during initialization
+org.candlepin.async.JobException: org.candlepin.messaging.CPMException: ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To fix it:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain service stop
+mv /var/lib/candlepin/activemq-artemis{,.old}
+satellite-maintain service Status
+sleep 20 &amp;&amp; hammer ping</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><code>hammer ping</code> should now show all services are ok.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="index.html">Guided solution</a></span>
-  <span class="next"><a href="section2.html">Guided solution (page 2 of 2)</a></span>
+  <span class="next"><a href="../appendix/appendix.html">Appendix</a></span>
 </nav>
 </article>
   </div>

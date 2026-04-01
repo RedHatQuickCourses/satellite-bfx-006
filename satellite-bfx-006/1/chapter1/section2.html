@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Check your work :: Satellite Breakfix 6</title>
+    <title>Break-fix Scenario :: Satellite Breakfix 6</title>
     <link rel="prev" href="section1.html">
-    <link rel="next" href="../chapter2/index.html">
+    <link rel="next" href="section3.html">
     <meta name="generator" content="Antora 3.1.3">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <script>var uiRootPath = '../../../_'</script>
@@ -35,7 +35,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Satellite Breakfix 6</a></h3>
+    <h3 class="title"><a href="../index.html">Break-fix Practice: Fixing Candlepin with Satellite 6</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -61,7 +61,10 @@
     <a class="nav-link" href="section1.html">Break-fix activity</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section2.html">Check your work</a>
+    <a class="nav-link" href="section2.html">Break-fix Scenario</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section3.html">Check your work</a>
   </li>
 </ul>
   </li>
@@ -74,10 +77,7 @@
     <a class="nav-link" href="../chapter2/index.html">Guided solution</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section1.html">Guided solution (page 1 of 2)</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../chapter2/section2.html">Guided solution (page 2 of 2)</a>
+    <a class="nav-link" href="../chapter2/section1.html">Guided Solution (1 of 1)</a>
   </li>
 </ul>
   </li>
@@ -95,12 +95,12 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Satellite Breakfix 6</span>
+    <span class="title">Break-fix Practice: Fixing Candlepin with Satellite 6</span>
     <span class="version">1</span>
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Satellite Breakfix 6</a>
+      <a class="title" href="../index.html">Break-fix Practice: Fixing Candlepin with Satellite 6</a>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">1</a>
@@ -118,9 +118,9 @@
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Satellite Breakfix 6</a></li>
+    <li><a href="../index.html">Break-fix Practice: Fixing Candlepin with Satellite 6</a></li>
     <li><a href="index.html">What’s in this break-fix?</a></li>
-    <li><a href="section2.html">Check your work</a></li>
+    <li><a href="section2.html">Break-fix Scenario</a></li>
   </ul>
 </nav>
 </div>
@@ -129,45 +129,73 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Check your work</h1>
-<div class="sect1">
-<h2 id="_follow_below_steps_in_the_lab_to_check_your_work"><a class="anchor" href="#_follow_below_steps_in_the_lab_to_check_your_work"></a>Follow below steps in the lab to check your work</h2>
+<h1 class="page">Break-fix Scenario</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>FIXME: Add the instructions to be followed in the lab environment to make sure the problem has been resolved. You may chose to remove this block if grading script is provided in the lab to check the work.</p>
+<p>A RHEL9 server is running <code>Red Hat Satellite 6.17</code> but <code>hammer ping</code> command shows <code>candlepin</code> failure.
+Your job is to investigate the issue and ensure that <code>hammer ping</code> does not show <code>FAIL</code> for any of the services.</p>
+</div>
+<div class="paragraph">
+<p>Here is error the message:</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>[root@satellite ~]# hammer ping
+...
+...
+candlepin:
+    Status:          FAIL
+    Server Response: Message: Failed to open TCP connection to localhost:23443 (Connection refused - connect(2) for "localhost" port 23443)
+candlepin_auth:
+    Status:          FAIL
+    Server Response: Message: A backend service [ Candlepin ] is unreachable
+candlepin_events:
+    Status:          FAIL
+    message:         Not running
+    Server Response: Duration: 0ms
+...
+...
+...</pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_check_your_work_using_the_grading_script"><a class="anchor" href="#_check_your_work_using_the_grading_script"></a>Check your work using the grading script</h2>
+<h2 id="_objectives"><a class="anchor" href="#_objectives"></a>Objectives</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Investigate why the candlepin &amp; tomcat services are down in <code>hammer ping</code> .</p>
+</li>
+<li>
+<p>Solve the candlepin issue in the hands-on lab environment.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_recreate_scenario"><a class="anchor" href="#_recreate_scenario"></a>Recreate Scenario</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After you have resolved the issue and met the success criteria, login to <code>FIXME</code> system as <code>FIXME</code> user and run the grading script as shown here to check your work:</p>
+<p>To recreate this scenario, run the <code>lab</code> script on the <code>bastion</code> server.</p>
 </div>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">break-fix-script grade</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">lab break breakfix0</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Sample output</div>
 <div class="content">
-<pre>[root@classroom ~]# break-fix-script grade
-Initiating break-fix-script with option grade
-Grading.  Please wait.
-Success.
-COMPLETION CODE: &lt;check your output for this value&gt;
-Completed break-fix-script with option grade successfully</pre>
+<pre>[lab-user@bastion ~]$ lab break breakfix0
+Initiating /usr/local/bin/lab with option(s) break breakfix0
+Completed /usr/local/bin/lab with option(s) break breakfix0 successfully</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>FIXME: Remove the below block if no grading script is provided to check the work in the break-fix activity. In this case make sure you use the above block to provide step-by-step instructions learner can follow to check their work.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_submit_the_completion_code"><a class="anchor" href="#_submit_the_completion_code"></a>Submit the completion code</h2>
-<div class="sectionbody">
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -175,29 +203,50 @@ Completed break-fix-script with option grade successfully</pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Skip this if not applicable for you.
+It may take 2-3 minutes to complete.
 </td>
 </tr>
 </table>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>For RedHat internal audience: Submit that completion code <a href="https://link-to-appropriate-lms.com" target="_blank" rel="noopener">here</a> to receive a grade for this training</p>
-</li>
-<li>
-<p>For RedHat partners: Submit that completion code <a href="https://link-to-appropriate-lms.com" target="_blank" rel="noopener">here</a> to receive a grade for this training</p>
-</li>
-</ul>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_success_criteria"><a class="anchor" href="#_success_criteria"></a>Success Criteria</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>FIXME: Change the links in the above lines to the link for appropriate audience specific LMS where learner can provide completion code. Remove this block if submitting completion is not applicable.</p>
+<p>Ensure the <code>hammer ping</code> command results in ok for all the listed services including candlepin.</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">hammer ping</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>...
+...
+
+candlepin:
+    Status:          ok
+    Server Response: Duration: 21ms
+candlepin_auth:
+    Status:          ok
+    Server Response: Duration: 16ms
+candlepin_events:
+    Status:          ok
+    message:         32 Processed, 0 Failed
+    Server Response: Duration: 0ms
+
+...
+...</pre>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="section1.html">Break-fix activity</a></span>
-  <span class="next"><a href="../chapter2/index.html">Guided solution</a></span>
+  <span class="next"><a href="section3.html">Check your work</a></span>
 </nav>
 </article>
   </div>
