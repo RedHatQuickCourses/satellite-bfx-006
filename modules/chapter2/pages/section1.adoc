@@ -46,7 +46,7 @@ drw-------. 2 root root 158 Mar 22 03:05 /var/log/candlepin
 
 ----
 
- - To fix it:
+ - To fix it we would change the group ownership of `/etc/tomcat/` and `/etc/candlepin` followed by change of ownership and permissions for `/var/log/candlepin` :
 +
 [source,bash,role=execute]
 ----
@@ -66,7 +66,7 @@ chmod 644 -R /var/log/candlepin
 org.candlepin.async.JobException: org.candlepin.messaging.CPMException: ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
 ----
 
- - To fix it:
+ - To fix the file corruption, we would need to first stop the satellite service , then move the corrupted files and then start the services again to regenerate them. Finally we would wait a bit and run hammer ping to check the output:
 +
 [source,bash,role=execute]
 ----
