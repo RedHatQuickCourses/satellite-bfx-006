@@ -3,12 +3,14 @@
 A RHEL9 server is running `Red Hat Satellite 6.17` but `hammer ping` command shows `candlepin` failure.
 Your job is to investigate the issue and ensure that `hammer ping` does not show `FAIL` for any of the services.
 
-Here is error the message:
-
-.Sample output
+* Here is error the message:
++
+====
+[source,subs="verbatim,quotes"]
 ----
-[root@satellite ~]# hammer ping
-...
+[lab-user@bastion ~]$ **sudo ssh satellite**
+[cloud-user@satellite ~]$ **sudo su -**
+[root@satellite ~]# **hammer ping**
 ...
 candlepin:        
     Status:          FAIL
@@ -21,9 +23,8 @@ candlepin_events:
     message:         Not running
     Server Response: Duration: 0ms
 ...
-...
-...
 ----
+====
 
 == Objectives
 
@@ -32,37 +33,31 @@ candlepin_events:
 
 == Recreate Scenario
 
-To recreate this scenario, run the `lab` script on the `bastion` server.
-
-[source,bash,role=execute]
+* To recreate this scenario, run the `lab` script on the `bastion` server.
++
+====
+[source,subs="verbatim,quotes"]
 ----
-lab break breakfix0
-----
-
-.Sample output
-----
-[lab-user@bastion ~]$ lab break breakfix0
+[lab-user@bastion ~]$ **lab break breakfix0**
 Initiating /usr/local/bin/lab with option(s) break breakfix0
 Completed /usr/local/bin/lab with option(s) break breakfix0 successfully
 ----
+====
 
 [NOTE]
 It may take 2-3 minutes to complete.
 
 == Success Criteria
 
-Ensure the `hammer ping` command results in ok for all the listed services including candlepin.
-
-[source,bash,role=execute]
+* Ensure the `hammer ping` command results in ok for all the listed services including candlepin.
++
+====
+[source,subs="verbatim,quotes"]
 ----
-hammer ping
-----
-
-.Sample output:
-----
+[lab-user@bastion ~]$ **sudo ssh satellite**
+[cloud-user@satellite ~]$ **sudo su -**
+[root@satellite ~]# **hammer ping**
 ...
-...
-
 candlepin:        
     Status:          ok
     Server Response: Duration: 21ms
@@ -73,7 +68,5 @@ candlepin_events:
     Status:          ok
     message:         32 Processed, 0 Failed
     Server Response: Duration: 0ms
-
-...
 ...
 ----
