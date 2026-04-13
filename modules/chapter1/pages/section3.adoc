@@ -6,7 +6,13 @@ After you have resolved the issue and met the success criteria, log in to the `b
 ====
 [source,subs="verbatim,quotes"]
 ----
-[lab-user@bastion ~]$ lab grade grade1
+[lab-user@bastion ~]$ lab grade grade0
+...
+TASK [Checking result] *
+ok: [satellite] => {
+    "msg": "Success. your alphanumeric code for completion is XXXXXX"
+}
+...
 ----
 ====
 

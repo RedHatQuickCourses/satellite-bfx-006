@@ -6,8 +6,6 @@
 
 A RHEL9 server is running Red Hat Satellite 6.17 but hammer ping command shows candlepin failure. This failure needs to be fixed for successfully running candlepin service on satellite.
 
-
-
 **What you should already know:**
 
 - This training assumes that you are a Red Hat Certified System Administrator (RHCSA) or have equivalent experience administrating Red Hat Enterprise Linux 8 or 9. +
