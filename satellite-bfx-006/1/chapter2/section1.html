@@ -193,7 +193,7 @@ drw-------. 2 root root 158 Mar 22 03:05 /var/log/candlepin
 </div>
 </li>
 <li>
-<p>To fix it:</p>
+<p>To fix it we would change the group ownership of <code>/etc/tomcat/</code> and <code>/etc/candlepin</code> followed by change of ownership and permissions for <code>/var/log/candlepin</code> :</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">chgrp -R tomcat /etc/tomcat
@@ -220,7 +220,7 @@ org.candlepin.async.JobException: org.candlepin.messaging.CPMException: ActiveMQ
 <div class="ulist">
 <ul>
 <li>
-<p>To fix it:</p>
+<p>To fix the file corruption, we would need to first stop the satellite service , then move the corrupted files and then start the services again to regenerate them. Finally we would wait a bit and run hammer ping to check the output:</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain service stop
