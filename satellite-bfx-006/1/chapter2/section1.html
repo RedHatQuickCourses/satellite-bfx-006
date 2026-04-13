@@ -148,92 +148,120 @@
 <div class="sect1">
 <h2 id="_instructions"><a class="anchor" href="#_instructions"></a>Instructions</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Run the following instructions on the <code>satellite</code> system with <code>root</code> as the user.</p>
-</div>
-<div class="listingblock">
-<div class="title">Sample output:</div>
-<div class="content">
-<pre>[cloud-user@satellite ~]$ sudo su -
-[root@satellite ~]#</pre>
-</div>
-</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Check the <code>/var/log/messages</code> log to get some hint . We should see something like the below trace which indicates issues with permissions of files &amp; directories related to candlepin and also in some cases ownership is missing from tomcat.</p>
+<p>Run the following instructions on the <code>satellite</code> system with <code>root</code> as the user.</p>
 <div class="listingblock">
 <div class="title">Sample output:</div>
 <div class="content">
-<pre>Apr  1 03:38:26 satellite server[6039]: #011java.io.FileNotFoundException: /usr/share/tomcat/conf/server.xml (Permission denied)
+<pre class="highlightjs highlight"><code class="language-none hljs">[lab-user@bastion ~]$ <strong>sudo ssh satellite</strong>
+[cloud-user@satellite ~]$ <strong>sudo su -</strong>
+[root@satellite ~]#</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the <code>/var/log/messages</code> log to get some hint . You should see something like the below trace which indicates issues with permissions of files &amp; directories related to candlepin and also in some cases ownership is missing from tomcat.</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">[root@satellite ~]# <strong>grep -i "permission" /var/log/messages</strong>
+Apr  1 03:38:26 satellite server[6039]: #011java.io.FileNotFoundException: /usr/share/tomcat/conf/server.xml (Permission denied)
 Apr  1 03:38:26 satellite server[6039]: 01-Apr-2026 03:38:26.862 WARNING [main] org.apache.catalina.startup.Catalina.parseServerXml Permissions incorrect, read permission is not allowed on the file
 Apr  1 03:42:33 satellite server[7775]: #011java.io.FileNotFoundException: /usr/share/tomcat/conf/server.xml (Permission denied)
-Apr  1 03:42:33 satellite server[7775]: 01-Apr-2026 03:42:33.887 WARNING [main] org.apache.catalina.startup.Catalina.parseServerXml Permissions incorrect, read permission is not allowed on the file</pre>
+Apr  1 03:42:33 satellite server[7775]: 01-Apr-2026 03:42:33.887 WARNING [main] org.apache.catalina.startup.Catalina.parseServerXml Permissions incorrect, read permission is not allowed on the file</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
-<p>Check the below files and directories</p>
+<p>Confirm the files mentioned in above logs are missing:</p>
 <div class="listingblock">
 <div class="title">Sample output:</div>
 <div class="content">
-<pre>[root@satellite ~]# ls -ld /etc/tomcat
+<pre class="highlightjs highlight"><code class="language-none hljs">[root@satellite ~]# <strong>ls -ld /etc/tomcat</strong>
 drwxr-xr-x. 4 root root 4096 Mar 22 03:07 /etc/tomcat
 ^^ Group ownership of tomcat is missing here
 
-[root@satellite ~]# ll /etc/candlepin/candlepin.conf
+[root@satellite ~]# <strong>ll /etc/candlepin/candlepin.conf</strong>
 -rw-r-----. 1 root root 1674 Dec  2 04:50 /etc/candlepin/candlepin.conf
 ^^ Group ownership of tomcat is missing here
 
-[root@satellite ~]# ls -ld /var/log/candlepin
+[root@satellite ~]# <strong>ls -ld /var/log/candlepin</strong>
 drw-------. 2 root root 158 Mar 22 03:05 /var/log/candlepin
-^^ Permission on others and ownerhsip both are missing here</pre>
+^^ Permission on others and ownerhsip both are missing here</code></pre>
 </div>
 </div>
 </li>
 <li>
-<p>To fix it we would change the group ownership of <code>/etc/tomcat/</code> and <code>/etc/candlepin</code> followed by change of ownership and permissions for <code>/var/log/candlepin</code> :</p>
-<div class="listingblock execute">
+<p>Let&#8217;s fix the missing files issue and change the group ownership of <code>/etc/tomcat/</code> and <code>/etc/candlepin</code> followed
+by change of ownership and permissions for <code>/var/log/candlepin</code>:</p>
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">chgrp -R tomcat /etc/tomcat
-chgrp tomcat -R /etc/candlepin/
-chgrp tomcat /etc/candlepin/candlepin.conf
-chown -R tomcat:tomcat /var/log/candlepin
-chmod 644 -R /var/log/candlepin</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[root@satellite ~]# <strong>chgrp -R tomcat /etc/tomcat</strong>
+[root@satellite ~]# <strong>chgrp tomcat -R /etc/candlepin/</strong>
+[root@satellite ~]# <strong>chgrp tomcat /etc/candlepin/candlepin.conf</strong>
+[root@satellite ~]# <strong>chown -R tomcat:tomcat /var/log/candlepin</strong>
+[root@satellite ~]# <strong>chmod 644 -R /var/log/candlepin</strong></code></pre>
 </div>
-</div>
-</li>
-</ul>
 </div>
 </li>
 <li>
-<p>Check the <code>/var/log/candlepin/error.log</code> log to get some further hint . We should see something like the below trace which indicates issues with activemq data corruption.</p>
+<p>Check the <code>/var/log/candlepin/error.log</code> log to get some further hint . You should see something like the below trace which indicates issues with activemq data corruption.</p>
 <div class="listingblock">
 <div class="title">Sample output:</div>
 <div class="content">
-<pre>2026-04-01 03:42:58,072 [thread=main] [=, org=, csid=] WARN  org.candlepin.controller.mode.CandlepinModeManager - Candlepin is entering suspend mode. Reason: [ACTIVEMQ] DOWN
+<pre class="highlightjs highlight"><code class="language-none hljs">2026-04-01 03:42:58,072 [thread=main] [=, org=, csid=] WARN  org.candlepin.controller.mode.CandlepinModeManager - Candlepin is entering suspend mode. Reason: [ACTIVEMQ] DOWN
 2026-04-01 03:42:58,306 [thread=main] [=, org=, csid=] ERROR org.candlepin.async.JobManager - Unexpected exception occurred during initialization
-org.candlepin.async.JobException: org.candlepin.messaging.CPMException: ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]</pre>
+org.candlepin.async.JobException: org.candlepin.messaging.CPMException: ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
-<p>To fix the file corruption, we would need to first stop the satellite service , then move the corrupted files and then start the services again to regenerate them. Finally we would wait a bit and run hammer ping to check the output:</p>
-<div class="listingblock execute">
+<p>To fix the file corruption, you would need to first stop the satellite service , then move the corrupted files and then start the services again to regenerate them. Finally we would wait a bit and run hammer ping to check the output:</p>
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain service stop
-mv /var/lib/candlepin/activemq-artemis{,.old}
-satellite-maintain service start
-sleep 20 &amp;&amp; hammer ping</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">[root@satellite ~]# <strong>satellite-maintain service stop</strong>
+[root@satellite ~]# <strong>mv /var/lib/candlepin/activemq-artemis{,.old}</strong>
+[root@satellite ~]# <strong>satellite-maintain service start</strong>
+[root@satellite ~]# <strong>sleep 20 &amp;&amp; hammer ping</strong></code></pre>
 </div>
 </div>
-</li>
-<li>
-<p><code>hammer ping</code> should now show all services are ok.</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="title">The <code>hammer ping</code> should now show all services are ok.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">[root@satellite ~]# <strong>sleep 20 &amp;&amp; hammer ping</strong>
+database:
+    Status:          ok
+    Server Response: Duration: 0ms
+cache:
+    servers:
+     1) Status:          ok
+        Server Response: Duration: 0ms
+candlepin:
+    Status:          ok
+    Server Response: Duration: 60ms
+candlepin_auth:
+    Status:          ok
+    Server Response: Duration: 59ms
+candlepin_events:
+    Status:          ok
+    message:         0 Processed, 0 Failed
+    Server Response: Duration: 0ms
+katello_events:
+    Status:          ok
+    message:         0 Processed, 0 Failed
+    Server Response: Duration: 1ms
+pulp3:
+    Status:          ok
+    Server Response: Duration: 307ms
+pulp3_content:
+    Status:          ok
+    Server Response: Duration: 109ms
+foreman_tasks:
+    Status:          ok
+    Server Response: Duration: 9ms</code></pre>
+</div>
 </div>
 </li>
 </ol>
