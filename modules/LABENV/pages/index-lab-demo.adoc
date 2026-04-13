@@ -3,7 +3,7 @@
 == Instructions to Launch Your Lab on the Red Hat Demo Platform (RHDP)
 
 . **Log in** to the xref:#RHDP-Portal-Links[RHDP portal]
-. **Search** for the catalog entry: **FIXME Lab Catalog Name**.
+. **Search** for the catalog entry: **Product Enablement: Red Hat Satellite 6.17 Break-fix lab[https://catalog.demo.redhat.com/catalog?item=babylon-catalog-prod/pert.satellite6-17-bfx.prod&utm_source=webapp&utm_medium=share-link,window=_blank]**.
 . **Click** on the catalog entry in the search results.
 . On the catalog page, **click** the **Order** button.
 . **Fill out** the required details in the order form.
@@ -22,6 +22,6 @@
 
 [[RHDP-Portal-Links]]
 === RHDP Portal Links
-- RedHat associates: https://demo.redhat.com/[https://demo.redhat.com/,window=_blank]
+- RedHat associates: https://demo.redhat.com/[https://catalog.demo.redhat.com,window=_blank]
 - RedHat partners: https://partner.demo.redhat.com/[https://partner.demo.redhat.com/,window=_blank]
 

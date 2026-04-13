@@ -1,6 +1,6 @@
 = Appendix
 
-We have some solution articles documentating similar issues:
+Reference solution articles documentating similar issues:
  https://access.redhat.com/solutions/6962659
  +
  https://access.redhat.com/solutions/7083572
