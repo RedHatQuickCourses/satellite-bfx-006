@@ -175,7 +175,7 @@ Apr  1 03:42:33 satellite server[7775]: 01-Apr-2026 03:42:33.887 WARNING [main] 
 </div>
 </li>
 <li>
-<p>Confirm the files mentioned in above logs are missing:</p>
+<p>Check &amp; verify the permissions &amp; owenership of related files:</p>
 <div class="listingblock">
 <div class="title">Sample output:</div>
 <div class="content">
@@ -200,7 +200,6 @@ by change of ownership and permissions for <code>/var/log/candlepin</code>:</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">[root@satellite ~]# <strong>chgrp -R tomcat /etc/tomcat</strong>
 [root@satellite ~]# <strong>chgrp tomcat -R /etc/candlepin/</strong>
-[root@satellite ~]# <strong>chgrp tomcat /etc/candlepin/candlepin.conf</strong>
 [root@satellite ~]# <strong>chown -R tomcat:tomcat /var/log/candlepin</strong>
 [root@satellite ~]# <strong>chmod 644 -R /var/log/candlepin</strong></code></pre>
 </div>
