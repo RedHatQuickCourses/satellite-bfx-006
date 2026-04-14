@@ -33,7 +33,7 @@ Apr  1 03:42:33 satellite server[7775]: 01-Apr-2026 03:42:33.887 WARNING [main] 
 ----
 
  
-3. Confirm the files mentioned in above logs are missing:
+3. Check & verify the permissions & owenership of related files:
 +
 .Sample output:
 +
@@ -61,7 +61,6 @@ by change of ownership and permissions for `/var/log/candlepin`:
 ----
 [root@satellite ~]# **chgrp -R tomcat /etc/tomcat**
 [root@satellite ~]# **chgrp tomcat -R /etc/candlepin/**
-[root@satellite ~]# **chgrp tomcat /etc/candlepin/candlepin.conf**
 [root@satellite ~]# **chown -R tomcat:tomcat /var/log/candlepin**
 [root@satellite ~]# **chmod 644 -R /var/log/candlepin**
 ----
