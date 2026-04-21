@@ -8,7 +8,7 @@
 
 == Instructions
 
-1. Run the following instructions on the `satellite` system with `root` as the user.
+1. Run the following instructions on the `Red Hat Satellite` system with `root` as the user.
 +
 .Sample output:
 +
@@ -77,7 +77,7 @@ by change of ownership and permissions for `/var/log/candlepin`:
 org.candlepin.async.JobException: org.candlepin.messaging.CPMException: ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
 ----
 
-6. To fix the file corruption, you would need to first stop the satellite service , then move the corrupted files and then start the services again to regenerate them. Finally we would wait a bit and run hammer ping to check the output:
+6. To fix the file corruption, you would need to first stop the satellite service, then move the corrupted files and then start the services again to regenerate them. Finally we would wait a bit and run hammer ping to check the output:
 +
 [source,subs="verbatim,quotes"]
 +
