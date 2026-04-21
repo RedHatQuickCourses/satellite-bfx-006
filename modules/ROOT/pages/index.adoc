@@ -1,4 +1,4 @@
-= Fixing Candlepin on Satellite 6
+= Fixing Candlepin on Red Hat Satellite 6
 :navtitle: Home
 
 == Introduction
@@ -7,7 +7,7 @@
 - Red Hat Satellite 6
 - Red Hat Enterprise Linux 9
 
-=== Break-fix Practice: Fixing Candlepin with Satellite 6
+=== Break-fix Practice: Fixing Candlepin with Red Hat Satellite 6
 
 Description:
 This break-fix training simulates a problem with candlepin service on Red Hat Satellite . You'll investigate and solve the problem in a hands-on lab environment to complete the training.

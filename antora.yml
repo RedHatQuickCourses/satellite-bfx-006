@@ -1,5 +1,5 @@
 name: satellite-bfx-006
-title: "Break-fix Practice: Fixing Candlepin with Satellite 6"
+title: "Break-fix Practice: Fixing Candlepin with Red Hat Satellite 6"
 version: 1
 nav:
 - modules/ROOT/nav.adoc
